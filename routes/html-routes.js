@@ -1,5 +1,13 @@
 const path = require("node:path");
+const router = require("express").Router();
 
-// get /notes should return the notes.html file
+// returns the index.html file
+router.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/index.html"));
+})
 
-// get * should return index.html
+router.get("/notes", (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/notes.html"));
+})
+
+module.exports = router;
