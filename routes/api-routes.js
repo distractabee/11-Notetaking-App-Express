@@ -7,9 +7,13 @@ const { uuid } = require('uuid');
 // add it to the db.json file, and return the new note to the client.
 
 router.get("/api/notes", (req, res) => {
-    readFromFile("./db/db.json")
-    .then((data) => res
-    .json(JSON.parse(data)))
+    fs.readFile("./db/db.json", "utf8", (err, data) => {
+        if (err) {
+            console.error(err)
+        } else {
+            res.send(db)
+        }
+    })
 })
 
 router.post("/api/notes", (req, res) => {
