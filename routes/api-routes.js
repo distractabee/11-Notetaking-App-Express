@@ -25,9 +25,7 @@ router.post("/api/notes", (req, res) => {
             id: uuid()
         };
         db.push(newNote);
-        fs.writeFileSync(path.join(__dirname, '../db/db.json'), JSON.stringify(db), err => {
-            if (err) throw err
-        });
+        fs.writeFile('../db/db.json');
 
         res.json(newNote);
     }
