@@ -30,7 +30,8 @@ router.post("/api/notes", (req, res) => {
 })
 
 router.delete("/api/notes/:id", (req, res) => {
-    
+    const noteId = req.params.id
+
 })
 // BONUS: add a delete /api/notes/:id route
 module.exports = router;
