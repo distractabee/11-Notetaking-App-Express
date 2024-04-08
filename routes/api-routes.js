@@ -1,13 +1,14 @@
 const db = require("../db/db.json");
 const fs = require('fs');
 const router = require("express").Router();
+const path = require('path');
 // the uuid package will generate unique ids for each note
-const { uuid } = require('uuid');
+const { v4 } = require('uuid');
 // post api/notes should receive a new note to save on the request body, 
 // add it to the db.json file, and return the new note to the client.
 
 router.get("/api/notes", (req, res) => {
-    fs.readFile("./db/db.json", "utf8", (err, data) => {
+    fs.readFile(path.join(__dirname, "../db/db.json"), "utf8", (err, data) => {
         if (err) {
             console.error(err)
         } else {
@@ -18,16 +19,23 @@ router.get("/api/notes", (req, res) => {
 
 router.post("/api/notes", (req, res) => {
     const { title, text } = req.body;
+    console.log(db)
+    // const dbData = JSON.parse(db);
     if (req.body) {
         const newNote = {
             title: req.body.title,
             text: req.body.text,
-            id: uuid()
+            id: v4()
         };
         db.push(newNote);
-        fs.writeFile('../db/db.json');
+        fs.writeFile('../db/db.json', JSON.stringify(db), (err) => {
+            if (err) {
+                return res.json({ error: err })
+            }
+           return res.json(newNote)
+        });
 
-        res.json(newNote);
+        // res.json(newNote);
     }
 })
 
