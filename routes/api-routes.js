@@ -1,5 +1,4 @@
 const db = require("../db/db.json");
-const notes = JSON.parse(data);
 const fs = require('fs');
 const router = require("express").Router();
 const path = require('path');
@@ -10,6 +9,7 @@ const { v4 } = require('uuid');
 
 router.get("/api/notes", (req, res) => {
     fs.readFile(path.join(__dirname, "../db/db.json"), "utf8", (err, data) => {
+        const notes = JSON.parse(data);
         if (err) {
             console.error(err)
         } 
@@ -20,6 +20,7 @@ router.get("/api/notes", (req, res) => {
 
 router.post("/api/notes", (req, res) => {
     const { title, text } = req.body;
+    const notes = JSON.parse(data);
     console.log(db)
     if (req.body) {
         const newNote = {
@@ -43,6 +44,7 @@ router.delete("/api/notes/:id", (req, res) => {
     const noteId = req.params.id;
 
     fs.readFile(path.join(__dirname, "../db/db.json"), "utf8", (err, data) => {
+        const notes = JSON.parse(data);
         if (err) {
             console.error(err)
         } 
