@@ -40,8 +40,26 @@ router.post("/api/notes", (req, res) => {
 })
 
 router.delete("/api/notes/:id", (req, res) => {
-    const noteId = req.params.id
+    const noteId = req.params.id;
 
+    fs.readFile(path.join(__dirname, "../db/db.json"), "utf8", (err, data) => {
+        if (err) {
+            console.error(err)
+        } 
+    const index = notes.findIndex(note => note.id === parseInt(noteId));
+
+    if (index !== -1) {
+        notes.splice(index, 1);
+
+        fs.writeFile(path.join(__dirname, '../db/db.json'), JSON.stringify(notes), (err) => {
+            if (err) {
+                console.log(error);
+            }
+            res.json({ message: 'Note deleted!' })
+        })
+    }
 })
+});
+
 // BONUS: add a delete /api/notes/:id route
 module.exports = router;
