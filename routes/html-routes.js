@@ -2,7 +2,7 @@ const path = require("node:path");
 const router = require("express").Router();
 
 // returns the index.html file
-router.get("/", (req, res) => {
+router.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "../public/index.html"));
 })
 

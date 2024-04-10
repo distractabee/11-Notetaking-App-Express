@@ -47,7 +47,7 @@ router.delete("/api/notes/:id", (req, res) => {
             console.error(err)
         } 
     const index = notes.findIndex(note => note.id === parseInt(noteId));
-
+        // finds the index number of the note and splices it off the json file
     if (index !== -1) {
         notes.splice(index, 1);
 
@@ -56,7 +56,9 @@ router.delete("/api/notes/:id", (req, res) => {
                 console.log(error);
             }
             res.json({ message: 'Note deleted!' })
-        })
+        });
+    } else {
+        res.status(404).json({ error: 'Note not found!' })
     }
 })
 });
